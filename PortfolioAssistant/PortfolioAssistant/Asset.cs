@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using HtmlAgilityPack;
@@ -55,6 +55,36 @@ namespace PortfolioAssistant
                     i++;
                 }
             }
+        }
+
+        public double GetFairValue(double growth, int duration)
+        {
+            double projected_eps = Convert.ToDouble(eps);
+
+            Console.WriteLine(eps);
+            Console.WriteLine(pe);
+
+            int y = 0;
+            while(y < duration - 1)
+            {
+                projected_eps = projected_eps * (1 + growth / 100);
+                Console.WriteLine(projected_eps);
+                y++;
+            }
+
+            double future_price = projected_eps * Convert.ToDouble(pe);
+            Console.WriteLine(future_price);
+            double fair_value = future_price;
+
+            while(y > 0)
+            {
+                fair_value = fair_value * (1 - growth / 100);
+                Console.WriteLine(fair_value);
+                y = y -1;
+            }
+
+            Console.WriteLine("Intrinsic Value of " + ticker + " = " + fair_value);
+            return fair_value;
         }
     }
 
